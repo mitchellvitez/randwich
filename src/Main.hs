@@ -11,33 +11,34 @@ import Data.ByteString
 
 main :: IO ()
 main = do
-  quickHttpServe echoHandler
+  g <- newStdGen
+  quickHttpServe (echoHandler g)
 
-echoHandler :: Snap()
-echoHandler = do
-  let rand = getSandwichNum
+echoHandler :: (RandomGen g) => g -> Snap()
+echoHandler g = do
+  let (rand, g) = sandwichPicker g
   let str = getSandwichFromNum rand
   writeBS str
 
-getSandwichNum :: IO Int
-getSandwichNum = getStdRandom (randomR (1,17))
+sandwichPicker :: (RandomGen g) => g -> (Int, RandomGen)
+sandwichPicker g = randomR (1, 17) g
 
-getSandwichFromNum :: IO Int -> ByteString
+getSandwichFromNum :: Int -> ByteString
 getSandwichFromNum x
-  | x == 1 = "Sandwich one"
-  | x == 2 = "Sandwich two"
-  | x == 3 = "Sandwich th"
-  | x == 4 = "Sandwich fo"
-  | x == 5 = "Sandwich fi"
-  | x == 6 = "Sandwich two"
-  | x == 7 = "Sandwich two"
-  | x == 8 = "Sandwich two"
-  | x == 9 = "Sandwich two"
-  | x == 10 = "Sandwich two"
-  | x == 11 = "Sandwich two"
-  | x == 12 = "Sandwich two"
-  | x == 13 = "Sandwich two"
-  | x == 14 = "Sandwich two"
-  | x == 15 = "Sandwich two"
-  | x == 16 = "Sandwich two"
-  | x == 17 = "Sandwich two"
+  | x == 1 = "Pepe"
+  | x == 2 = "Big John"
+  | x == 3 = "Totally Tuna"
+  | x == 4 = "Turkey Tom"
+  | x == 5 = "Vito"
+  | x == 6 = "Vegetarian"
+  | x == 7 = "Smoked Ham Club"
+  | x == 8 = "Billy Club"
+  | x == 9 = "Italian Night Club"
+  | x == 10 = "Hunter's Club"
+  | x == 11 = "Country Club"
+  | x == 12 = "Beach Club"
+  | x == 13 = "Gourmet Veggie Club"
+  | x == 14 = "Bootlegger Club"
+  | x == 15 = "Club Tuna"
+  | x == 16 = "Club Lulu"
+  | x == 17 = "Ultimate Porker"
