@@ -20,7 +20,7 @@ echoHandler g = do
   let str = getSandwichFromNum rand
   writeBS str
 
-sandwichPicker :: (RandomGen g) => g -> (Int, RandomGen)
+sandwichPicker :: (RandomGen g) => g -> (Int, g)
 sandwichPicker g = randomR (1, 17) g
 
 getSandwichFromNum :: Int -> ByteString
