@@ -17,11 +17,34 @@ main = do
 echoHandler :: RandomGen g => g -> Snap()
 echoHandler g = do
   let (rand, _) = sandwichPicker g
-  let str = getSandwichFromNum rand
-  writeBS str
+  let sandwichName = getSandwichFromNum rand
+  let sandwichNumber = getNumAsBS rand
+  let sentence = Data.ByteString.concat ["You should get the ", sandwichName, " (#", sandwichNumber, ")! It's really tasty!"]
+  writeBS sentence
 
 sandwichPicker :: RandomGen g => g -> (Int, g)
 sandwichPicker g = randomR (1, 17) g
+
+getNumAsBS :: Int -> ByteString
+getNumAsBS x
+  | x == 1 = "1"
+  | x == 2 = "2"
+  | x == 3 = "3"
+  | x == 4 = "4"
+  | x == 5 = "5"
+  | x == 6 = "6"
+  | x == 7 = "7"
+  | x == 8 = "8"
+  | x == 9 = "9"
+  | x == 10 = "10"
+  | x == 11 = "11"
+  | x == 12 = "12"
+  | x == 13 = "13"
+  | x == 14 = "14"
+  | x == 15 = "15"
+  | x == 16 = "16"
+  | x == 17 = "17"
+
 
 getSandwichFromNum :: Int -> ByteString
 getSandwichFromNum x
