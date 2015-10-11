@@ -14,13 +14,13 @@ main = do
   g <- newStdGen
   quickHttpServe (echoHandler g)
 
-echoHandler :: (RandomGen g) => g -> Snap()
+echoHandler :: RandomGen g => g -> Snap()
 echoHandler g = do
-  let (rand, g) = sandwichPicker g
+  let (rand, _) = sandwichPicker g
   let str = getSandwichFromNum rand
   writeBS str
 
-sandwichPicker :: (RandomGen g) => g -> (Int, g)
+sandwichPicker :: RandomGen g => g -> (Int, g)
 sandwichPicker g = randomR (1, 17) g
 
 getSandwichFromNum :: Int -> ByteString
