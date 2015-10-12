@@ -27,7 +27,7 @@ sandwichPicker :: RandomGen g => g -> (Int, g)
 sandwichPicker g = randomR (1, 17) g
 
 getNumAsBS :: Int -> ByteString
-getNumAsBS x = C.pack (show x)
+getNumAsBS x = C.pack $ show x
 
 getSandwichFromNum :: Int -> ByteString
 getSandwichFromNum x
