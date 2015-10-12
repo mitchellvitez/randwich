@@ -8,6 +8,7 @@ import Snap.Util.FileServe
 import Snap.Http.Server
 import System.Random
 import Data.ByteString
+import qualified Data.ByteString.Char8 as C
 
 main :: IO ()
 main = do
@@ -19,32 +20,14 @@ echoHandler g = do
   let (rand, _) = sandwichPicker g
   let sandwichName = getSandwichFromNum rand
   let sandwichNumber = getNumAsBS rand
-  let sentence = Data.ByteString.concat ["You should get the ", sandwichName, " (#", sandwichNumber, ")! It's really tasty!"]
+  let sentence = Data.ByteString.concat ["<p>You should get the ", sandwichName, " (#", sandwichNumber, ")! It's really tasty!</p>"]
   writeBS sentence
 
 sandwichPicker :: RandomGen g => g -> (Int, g)
 sandwichPicker g = randomR (1, 17) g
 
 getNumAsBS :: Int -> ByteString
-getNumAsBS x
-  | x == 1 = "1"
-  | x == 2 = "2"
-  | x == 3 = "3"
-  | x == 4 = "4"
-  | x == 5 = "5"
-  | x == 6 = "6"
-  | x == 7 = "7"
-  | x == 8 = "8"
-  | x == 9 = "9"
-  | x == 10 = "10"
-  | x == 11 = "11"
-  | x == 12 = "12"
-  | x == 13 = "13"
-  | x == 14 = "14"
-  | x == 15 = "15"
-  | x == 16 = "16"
-  | x == 17 = "17"
-
+getNumAsBS x = C.pack (show x)
 
 getSandwichFromNum :: Int -> ByteString
 getSandwichFromNum x
